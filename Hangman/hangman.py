@@ -21,7 +21,7 @@ def get_valid_words(words):
 def hangman():
     words = load_data()
     # print(f'length of list: {len(words)}')
-    word = get_valid_words(words)
+    word = get_valid_words(words).upper()
     word_letters = set(word)    # letters in the word
     alphabet = set(string.ascii_uppercase)
     used_letters = set()    # what user has guessed
