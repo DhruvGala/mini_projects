@@ -1,3 +1,5 @@
+from player import HumanPlayer, RandomComputerPlayer
+
 class TickTacToe:
     def __init__(self):
         self.board = [' ' for _ in range(9)]    # we will use a single list to rep 3x3 board
@@ -76,7 +78,7 @@ def play(game, x_player, o_player, print_game=True):
 
     letter = 'X'    # starting letter
     # iterate while the game still has empty squares.
-    while game.empty_square():
+    while game.empty_squares():
         # get the move from appropriate player
         if letter == 'O':
             square = o_player.get_move(game)
@@ -99,3 +101,10 @@ def play(game, x_player, o_player, print_game=True):
     if print_game:
         print('Its a tie!')
         
+
+if __name__ == '__main__':
+    x_player = HumanPlayer('X')
+    o_player = RandomComputerPlayer('O')
+    t = TickTacToe()
+
+    play(t, x_player, o_player, print_game=True)
