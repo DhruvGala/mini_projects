@@ -27,7 +27,7 @@ class HumanPlayer(Player):
         valid_square = False
         val = None
         while not valid_square:
-            square = input(self.letter + '\'s turn. Input move (0-9):')
+            square = input(self.letter + '\'s turn. Input move (0-8):')
             # we're going to check if user inputs a correct value i.e. int
             # also we want to check if the enterd spot is available
             try:
