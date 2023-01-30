@@ -35,9 +35,39 @@ class TickTacToe:
         # return true, else just return false.
         if self.board[square] == ' ':
             self.board[square] = letter
+            if self.winner(square, letter):
+                self.current_winner = letter
             return True
         else:
             return False
+
+    def winner(self, square, letter):
+        # winner if 3 in a row anywhere, row, col or diag
+        # let's check row first
+        row_ind = square // 3
+        row = self.board[row_ind*3 : (row_ind + 1) * 3]
+        if all([spot == letter for spot in row]):
+            return True
+
+        #check col next
+        col_ind = square % 3
+        column = [self.board[col_ind*3] for i in range(3)]
+        if all([spot == letter for spot in column]):
+            return True
+        
+        #check diagonal
+        if square % 2 == 0:
+            diagonal1 = [self.board[i] for i in [0, 4, 8]]   # lef diag
+            if all([spot == letter for spot in diagonal1]):
+                return True
+
+            diagonal2 = [self.board[i] for i in [2, 4, 6]]  # right diag
+            if all([spot == letter for spot in diagonal2]):
+                return True
+    
+        return False
+
+
 
 
 def play(game, x_player, o_player, print_game=True):
@@ -59,6 +89,13 @@ def play(game, x_player, o_player, print_game=True):
                 game.print_board()
                 print('')
 
+            if game.current_winner:
+                if print_game:
+                    print(f'{letter} wins!')
+                return letter
+
             letter = 'O' if letter == 'X' else 'X'
 
+    if print_game:
+        print('Its a tie!')
         
