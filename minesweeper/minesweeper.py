@@ -9,10 +9,13 @@ class Board:
 
         #create board
         self.board = self.make_new_board()
+        self.assign_values_to_board()
+
 
         # init set to keep track of already dug locations
         self.dug = set()
 
+    #helper function
     def make_new_board(self):
 
         # using list of lists for 2-D board representation
@@ -24,11 +27,34 @@ class Board:
             row = loc // self.dim_size
             col = loc % self.dim_size
 
-            if board[row][col] == '*':
+            if board[row][col] == '*': 
                 continue
 
             board[row][col] = '*'
             bombs_planted += 1
+
+    # assigns value (0-8) for all empty spaces
+    # these represent how many locations far the neighboring bombs are.
+    def assign_values_to_board(self):
+        for row in range(self.dim_size):
+            for col in range(self.dim_size):
+                if self.board[row][col] == '*':
+                    continue
+
+                self.board[row][col] = self.get_number_of_neighboring_bombs(row, col)
+
+    # iterate through all 8 neighbors and count bombs
+    def get_number_of_neighboring_bombs(self, row, col):
+        num_neighboring_bombs = 0
+        for r in range(max(0, row-1), min(self.dim_size-1, row+1)+1):
+            for c in range(max(0, col-1), min(self.dim_size-1, col+1)+1):
+                if r == row and c == col:
+                    continue
+                if self.board[r][c] == '*':
+                    num_neighboring_bombs += 1
+
+        return num_neighboring_bombs
+
 
 # play game
 def play(dim_size=10, num_bombs=10):
