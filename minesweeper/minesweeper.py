@@ -10,7 +10,6 @@ class Board:
 
         #create board
         self.board = self.make_new_board()
-        print(self.board)
         self.assign_values_to_board()
 
 
@@ -98,14 +97,14 @@ class Board:
             )
         
         indices = [i for i in range(self.dim_size)]
-        indices_row = '  '
+        indices_row = '   '
         cells = []
         for idx, col in enumerate(indices):
             format = '%-' + str(widths[idx]) + "s"
             cells.append(format % (col))
         indices_row += '  '.join(cells)
         indices_row += '  \n'
-
+        
         for i in range(len(visible_board)):
             row = visible_board[i]
             string_rep += f'{i} |'
@@ -113,13 +112,13 @@ class Board:
             for idx, col in enumerate(row):
                 format = '%-' + str(widths[idx]) + "s"
                 cells.append(format % (col))
-            indices_row += ' |'.join(cells)
-            indices_row += ' |\n'
+            string_rep += ' |'.join(cells)
+            string_rep += ' |\n'
 
         str_len = int(len(string_rep) / self.dim_size)
         string_rep = indices_row + '-'*str_len + '\n' + string_rep + '-'*str_len
 
-        return string_rep 
+        return string_rep
 
 # play game
 def play(dim_size=10, num_bombs=10):
