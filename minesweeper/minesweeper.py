@@ -1,4 +1,5 @@
 import random
+import re
 
 # board object to represent mineseeper game
 # can be used for create board obj, dig here, render display
@@ -9,6 +10,7 @@ class Board:
 
         #create board
         self.board = self.make_new_board()
+        print(self.board)
         self.assign_values_to_board()
 
 
@@ -32,6 +34,8 @@ class Board:
 
             board[row][col] = '*'
             bombs_planted += 1
+
+        return board
 
     # assigns value (0-8) for all empty spaces
     # these represent how many locations far the neighboring bombs are.
@@ -128,4 +132,28 @@ def play(dim_size=10, num_bombs=10):
     #      at least next to a bomb.
     #4. repeat step 2 and 3a/b until no more candidate locations to dig,
     #   display user is Winner!
-    pass
+    safe = True
+
+    while len(board.dug) < board.dim_size ** 2 - num_bombs:
+        print(board)
+        user_input = re.split(',(\\s)*', input("Where would you like to dig? Input as row,col: "))
+        row, col = int(user_input[0]), int(user_input[-1])
+        if row < 0 or row >= board.dim_size or col < 0 or col >= board.dim_size:
+            print("invalid location, try again!")
+            continue
+
+        safe = board.dig(row, col)
+        if not safe:
+            # dug a bomb
+            break
+
+    if safe:
+        print("You Won!")
+    else:
+        print("Game Over!")
+
+        board.dug = [(r,c) for r in range(board.dim_size) for c in range(board.dim_size)]
+        print(board)
+
+if __name__ == '__main__':
+    play()
