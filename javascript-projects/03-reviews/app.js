@@ -50,8 +50,6 @@ function showPerson() {
   info.textContent = item.text;
 }
 
-// show next
-
 nextBtn.addEventListener("click", function() {
   currItem++;
   if (currItem > reviews.length - 1) {
