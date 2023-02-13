@@ -23,9 +23,9 @@ const reviews = [
   },
   {
     id: 4,
-    name: 'Monkey D. Luffy',
-    job: 'Pirate king',
-    img: 'https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse2.mm.bing.net%2Fth%3Fid%3DOIP.iyxnN7jPo2zeJNJQ7Qyl-gHaHa%26pid%3DApi&f=1&ipt=ab60f11501e3589d975a59200ab4ed3f2203715b74a56174ee8899e511636cc6&ipo=images',
+    name: 'Robin',
+    job: 'Historian',
+    img: 'https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Fi.pinimg.com%2Foriginals%2F88%2Fd6%2F95%2F88d695c106f6f5ae7cf5d5b77e8fbd2c.jpg&f=1&nofb=1&ipt=c378106873ffc00888d942d3a7487a4a207f75768efcee2b78f11d82f7b3df69&ipo=images',
     text: 'Edison bulb put a bird on it humblebrag, marfa pok pok heirloom fashion axe cray stumptown venmo actually seitan. VHS farm-to-table schlitz, edison bulb pop-up 3 wolf moon tote bag street art shabby chic. ',
   },
 ];
@@ -40,12 +40,35 @@ const prevBtn = document.querySelector(".prev-btn");
 const nextBtn = document.querySelector(".next-btn");
 const randomBtn = document.querySelector(".random-btn");
 
-let currItem = 3;
+let currItem = 0;
 
-window.addEventListener("DOMContentLoaded", function() {
+function showPerson() {
   const item = reviews[currItem];
   img.src = item.img;
   author.textContent = item.name;
   job.textContent = item.job;
   info.textContent = item.text;
+}
+
+// show next
+
+nextBtn.addEventListener("click", function() {
+  currItem++;
+  if (currItem > reviews.length - 1) {
+    currItem = 0;
+  }
+  showPerson();
+});
+
+prevBtn.addEventListener("click", function() {
+  currItem--;
+  if (currItem < 0) {
+    currItem = reviews.length - 1;
+  }
+  showPerson();
+});
+
+randomBtn.addEventListener("click", function() {
+  currItem = Math.floor(Math.random() * reviews.length);
+  showPerson();
 });
